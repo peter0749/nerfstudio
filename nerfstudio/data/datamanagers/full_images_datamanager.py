@@ -192,13 +192,13 @@ class FullImageDatamanager(DataManager, Generic[TDataset]):
                     cache["mask"] = cache["mask"].to(self.device)
         else:
             for cache in cached_train:
-                cache["image"] = cache["image"].pin_memory()
+                cache["image"] = cache["image"]
                 if "mask" in cache:
-                    cache["mask"] = cache["mask"].pin_memory()
+                    cache["mask"] = cache["mask"]
             for cache in cached_eval:
-                cache["image"] = cache["image"].pin_memory()
+                cache["image"] = cache["image"]
                 if "mask" in cache:
-                    cache["mask"] = cache["mask"].pin_memory()
+                    cache["mask"] = cache["mask"]
 
         return cached_train, cached_eval
 

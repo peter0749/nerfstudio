@@ -196,7 +196,7 @@ class SplatfactoModel(Model):
             # We can have colors without points.
             and self.seed_points[1].shape[0] > 0
         ):
-            shs = torch.zeros((self.seed_points[1].shape[0], dim_sh, 3)).float().cuda()
+            shs = torch.zeros((self.seed_points[1].shape[0], dim_sh, 3)).float().to("mps")
             if self.config.sh_degree > 0:
                 shs[:, 0, :3] = RGB2SH(self.seed_points[1] / 255)
                 shs[:, 1:, 3:] = 0.0
