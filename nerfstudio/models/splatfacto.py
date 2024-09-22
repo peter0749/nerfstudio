@@ -129,7 +129,7 @@ class SplatfactoModelConfig(ModelConfig):
     """below this size, gaussians are *duplicated*, otherwise split"""
     n_split_samples: int = 2
     """number of samples to split gaussians into"""
-    sh_degree_interval: int = 100
+    sh_degree_interval: int = 0
     """every n intervals turn on another sh degree"""
     cull_screen_size: float = 0.15
     """if a gaussian is more than this percent of screen space, cull it"""
