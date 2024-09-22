@@ -300,7 +300,7 @@ class SplatfactoModel(Model):
         param_groups = self.get_gaussian_param_groups()
         for group, param in param_groups.items():
             self.remove_from_optim(optimizers.optimizers[group], deleted_mask, param)
-        torch.cuda.empty_cache()
+        torch.mps.empty_cache()
 
     def dup_in_optim(self, optimizer, dup_mask, new_params, n=2):
         """adds the parameters to the optimizer"""
