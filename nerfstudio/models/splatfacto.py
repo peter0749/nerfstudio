@@ -129,7 +129,7 @@ class SplatfactoModelConfig(ModelConfig):
     """below this size, gaussians are *duplicated*, otherwise split"""
     n_split_samples: int = 2
     """number of samples to split gaussians into"""
-    sh_degree_interval: int = 0
+    sh_degree_interval: int = 100
     """every n intervals turn on another sh degree"""
     cull_screen_size: float = 0.15
     """if a gaussian is more than this percent of screen space, cull it"""
@@ -147,7 +147,7 @@ class SplatfactoModelConfig(ModelConfig):
     """weight of ssim loss"""
     stop_split_at: int = 15000
     """stop splitting at this step"""
-    sh_degree: int = 0
+    sh_degree: int = 2
     """maximum degree of spherical harmonics to use"""
     use_scale_regularization: bool = False
     """If enabled, a scale regularization introduced in PhysGauss (https://xpandora.github.io/PhysGaussian/) is used for reducing huge spikey gaussians."""
