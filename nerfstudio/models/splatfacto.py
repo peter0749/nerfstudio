@@ -129,7 +129,7 @@ class SplatfactoModelConfig(ModelConfig):
     """below this size, gaussians are *duplicated*, otherwise split"""
     n_split_samples: int = 2
     """number of samples to split gaussians into"""
-    sh_degree_interval: int = 1000
+    sh_degree_interval: int = 0
     """every n intervals turn on another sh degree"""
     cull_screen_size: float = 0.15
     """if a gaussian is more than this percent of screen space, cull it"""
@@ -147,7 +147,7 @@ class SplatfactoModelConfig(ModelConfig):
     """weight of ssim loss"""
     stop_split_at: int = 15000
     """stop splitting at this step"""
-    sh_degree: int = 3
+    sh_degree: int = 0
     """maximum degree of spherical harmonics to use"""
     use_scale_regularization: bool = False
     """If enabled, a scale regularization introduced in PhysGauss (https://xpandora.github.io/PhysGaussian/) is used for reducing huge spikey gaussians."""
@@ -741,11 +741,13 @@ class SplatfactoModel(Model):
         if self.config.sh_degree > 0:
             viewdirs = means_crop.detach() - camera.camera_to_worlds.detach()[..., :3, 3]  # (N, 3)
             viewdirs = viewdirs / viewdirs.norm(dim=-1, keepdim=True)
-            n = min(self.step // self.config.sh_degree_interval, self.config.sh_degree)
+            n = min(self.step // self.config.sh_degree_interval if self.config.sh_degree_interval>0 else 16384, self.config.sh_degree)
             rgbs = spherical_harmonics(n, viewdirs, colors_crop)
             rgbs = torch.clamp(rgbs + 0.5, min=0.0)  # type: ignore
         else:
             rgbs = torch.sigmoid(colors_crop[:, 0, :])
+
+        rgbs = rgbs.to(self.device)
 
         # rescale the camera back to original dimensions
         camera.rescale_output_resolution(camera_downscale)
