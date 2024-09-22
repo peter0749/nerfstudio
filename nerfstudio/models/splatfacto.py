@@ -147,7 +147,7 @@ class SplatfactoModelConfig(ModelConfig):
     """weight of ssim loss"""
     stop_split_at: int = 15000
     """stop splitting at this step"""
-    sh_degree: int = 2
+    sh_degree: int = 1
     """maximum degree of spherical harmonics to use"""
     use_scale_regularization: bool = False
     """If enabled, a scale regularization introduced in PhysGauss (https://xpandora.github.io/PhysGaussian/) is used for reducing huge spikey gaussians."""
